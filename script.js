@@ -1,15 +1,17 @@
-// 1. Configura tus credenciales de Supabase
-const SUPABASE_URL = "https://rwancgtywwkhowkcvqpu.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_-g-s6xqJkEGZDrwpDj9GQg_0dnF7Pyw";
-
-// 2. Inicializa el cliente de Supabase
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);/* ═══════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    NEXUSFLOW — script.js
    ES6+ Native JavaScript — No dependencies
    Author: Jesús Roo / @jsusroo
 ═══════════════════════════════════════════════════════ */
 
 'use strict';
+
+// 1. Configura tus credenciales de Supabase (Asegúrate de que correspondan a tu proyecto)
+const SUPABASE_URL = "https://rwancgtywwkhowkcvqpu.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_-g-s6xqJkEGZDrwpDj9GQg_0dnF7Pyw";
+
+// 2. Inicializa el cliente de Supabase de forma segura usando el objeto global del CDN
+const _supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // ── Utility ──────────────────────────────────────────
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -64,7 +66,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
     }
   }
 
-  // Connection lines
   function drawConnections() {
     const DIST = 100;
     for (let i = 0; i < particles.length; i++) {
@@ -96,7 +97,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
   loop();
   window.addEventListener('resize', resize);
 })();
-
 
 /* ══════════════════════════════════════════════════════
    2. CUSTOM CURSOR
@@ -134,7 +134,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
   animTrail();
 })();
 
-
 /* ══════════════════════════════════════════════════════
    3. NAVBAR SCROLL
 ══════════════════════════════════════════════════════ */
@@ -145,7 +144,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
     navbar.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 })();
-
 
 /* ══════════════════════════════════════════════════════
    4. HAMBURGER MENU
@@ -159,7 +157,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
     links.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
   });
-  // Close on link click
   $$('.nav-link', links).forEach(a => {
     a.addEventListener('click', () => {
       btn.classList.remove('open');
@@ -168,7 +165,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
     });
   });
 })();
-
 
 /* ══════════════════════════════════════════════════════
    5. SCROLL REVEAL
@@ -189,7 +185,6 @@ const rand = (min, max) => Math.random() * (max - min) + min;
   items.forEach(el => observer.observe(el));
 })();
 
-
 /* ══════════════════════════════════════════════════════
    6. COUNTER ANIMATIONS
 ══════════════════════════════════════════════════════ */
@@ -200,7 +195,7 @@ function animateCounter(el, target, duration = 1800, format = null) {
   function update(now) {
     const elapsed = now - start;
     const progress = clamp(elapsed / duration, 0, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out-cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
     const current = eased * target;
 
     if (format) {
@@ -216,7 +211,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   requestAnimationFrame(update);
 }
 
-// Hero stats
 (function initHeroStats() {
   const stats = $$('.stat-num');
   if (!stats.length) return;
@@ -235,7 +229,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   stats.forEach(el => observer.observe(el));
 })();
 
-// KPI counters
 (function initKPICounters() {
   const counters = $$('.counter');
   if (!counters.length) return;
@@ -255,7 +248,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   counters.forEach(el => observer.observe(el));
 })();
 
-
 /* ══════════════════════════════════════════════════════
    7. HERO MINI CHART (Canvas)
 ══════════════════════════════════════════════════════ */
@@ -264,7 +256,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // Responsive width
   function draw() {
     const W = canvas.offsetWidth;
     canvas.width  = W * window.devicePixelRatio;
@@ -281,7 +272,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     const xStep = w / (data.length - 1);
     const yScale = (v) => padY + h - ((v - min) / (max - min)) * h;
 
-    // Grid lines
     for (let i = 0; i <= 4; i++) {
       const y = padY + (h / 4) * i;
       ctx.beginPath();
@@ -292,7 +282,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
       ctx.stroke();
     }
 
-    // Area gradient
     const grad = ctx.createLinearGradient(0, padY, 0, padY + h);
     grad.addColorStop(0, 'rgba(91,141,246,0.25)');
     grad.addColorStop(1, 'rgba(91,141,246,0)');
@@ -309,7 +298,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     ctx.fillStyle = grad;
     ctx.fill();
 
-    // Line
     ctx.beginPath();
     data.forEach((v, i) => {
       const x = padX + i * xStep;
@@ -321,7 +309,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     ctx.lineJoin = 'round';
     ctx.stroke();
 
-    // Last point dot
     const lx = padX + (data.length - 1) * xStep;
     const ly = yScale(data[data.length - 1]);
     ctx.beginPath();
@@ -337,7 +324,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   draw();
   window.addEventListener('resize', draw);
 })();
-
 
 /* ══════════════════════════════════════════════════════
    8. SPARKLINE (Feature card)
@@ -359,7 +345,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     const xStep = (W - padX * 2) / (data.length - 1);
     const yScale = v => padY + h - ((v - min) / (max - min)) * h;
 
-    // Amber line
     ctx.beginPath();
     data.forEach((v, i) => {
       const x = padX + i * xStep;
@@ -376,7 +361,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   window.addEventListener('resize', draw);
 })();
 
-
 /* ══════════════════════════════════════════════════════
    9. MAIN METRICS CHART (Interactive)
 ══════════════════════════════════════════════════════ */
@@ -385,7 +369,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // Data sets for each range
   const datasets = {
     '7d': {
       labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
@@ -430,7 +413,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     const n = d.labels.length;
     const barW = Math.max(4, (cW / n) * 0.5);
 
-    // Background grid
     ctx.clearRect(0, 0, W, H);
     for (let i = 0; i <= 4; i++) {
       const y = padT + (cH / 4) * i;
@@ -441,16 +423,14 @@ function animateCounter(el, target, duration = 1800, format = null) {
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // Y label
       const val = maxExec - (maxExec / 4) * i;
       ctx.fillStyle = 'rgba(255,255,255,0.2)';
-      ctx.font = `${10 * 1}px 'DM Sans'`;
+      ctx.font = `10px 'DM Sans'`;
       ctx.textAlign = 'right';
       const label = val >= 1000000 ? (val/1000000).toFixed(1)+'M' : val >= 1000 ? (val/1000).toFixed(0)+'K' : val.toFixed(0);
       ctx.fillText(label, padL - 6, y + 4);
     }
 
-    // Bars (executions)
     const barGrad = ctx.createLinearGradient(0, padT, 0, padT + cH);
     barGrad.addColorStop(0, 'rgba(91,141,246,0.8)');
     barGrad.addColorStop(1, 'rgba(91,141,246,0.1)');
@@ -460,7 +440,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
       const barH = (v / maxExec) * cH;
       const y = padT + cH - barH;
 
-      // Hover highlight
       if (tooltip.visible && tooltip.idx === i) {
         ctx.fillStyle = 'rgba(91,141,246,0.15)';
         ctx.fillRect(padL + (i / (n-1)) * cW - barW - 8, padT, barW + 16, cH);
@@ -472,7 +451,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
       ctx.fill();
     });
 
-    // Error line (secondary axis)
     ctx.beginPath();
     d.err.forEach((v, i) => {
       const x = padL + (i / (n - 1)) * cW;
@@ -486,7 +464,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Dots on error line
     d.err.forEach((v, i) => {
       const x = padL + (i / (n - 1)) * cW;
       const y = padT + cH - (v / maxErr) * cH * 0.4;
@@ -496,9 +473,8 @@ function animateCounter(el, target, duration = 1800, format = null) {
       ctx.fill();
     });
 
-    // X labels
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.font = `${10}px 'DM Sans'`;
+    ctx.font = `10px 'DM Sans'`;
     ctx.textAlign = 'center';
     const step = Math.max(1, Math.floor(n / 10));
     d.labels.forEach((lbl, i) => {
@@ -507,7 +483,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
       ctx.fillText(lbl, x, H - 8);
     });
 
-    // Tooltip
     if (tooltip.visible && tooltip.idx >= 0) {
       const i = tooltip.idx;
       const x = padL + (i / (n - 1)) * cW;
@@ -540,7 +515,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     }
   }
 
-  // Mouse interaction
   canvas.addEventListener('mousemove', e => {
     const rect = canvas.getBoundingClientRect();
     const mx = e.clientX - rect.left;
@@ -563,7 +537,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     drawChart(currentRange);
   });
 
-  // Range tab switching
   $$('.range-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       $$('.range-tab').forEach(b => b.classList.remove('active'));
@@ -574,7 +547,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     });
   });
 
-  // IntersectionObserver to draw when visible
   const observer = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       drawChart(currentRange);
@@ -585,7 +557,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
 
   window.addEventListener('resize', () => drawChart(currentRange));
 })();
-
 
 /* ══════════════════════════════════════════════════════
    10. PRICING TOGGLE
@@ -621,7 +592,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     updatePrices();
   });
 })();
-
 
 /* ══════════════════════════════════════════════════════
    11. INTEGRATIONS FILTER GRID
@@ -678,7 +648,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   });
 })();
 
-
 /* ══════════════════════════════════════════════════════
    12. TESTIMONIALS CAROUSEL
 ══════════════════════════════════════════════════════ */
@@ -695,7 +664,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   const total = cards.length;
   const maxIdx = Math.max(0, total - perPage);
 
-  // Build dots
   function buildDots() {
     if (!dotsContainer) return;
     dotsContainer.innerHTML = '';
@@ -710,7 +678,7 @@ function animateCounter(el, target, duration = 1800, format = null) {
 
   function go(idx) {
     current = clamp(idx, 0, maxIdx);
-    const cardW = cards[0].offsetWidth + 16; // gap = 16
+    const cardW = cards[0].offsetWidth + 16;
     inner.style.transform = `translateX(-${current * cardW}px)`;
     buildDots();
   }
@@ -718,7 +686,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   if (prevBtn) prevBtn.addEventListener('click', () => go(current - 1));
   if (nextBtn) nextBtn.addEventListener('click', () => go(current + 1));
 
-  // Auto-advance
   let autoplay = setInterval(() => go(current < maxIdx ? current + 1 : 0), 5000);
   inner.addEventListener('mouseenter', () => clearInterval(autoplay));
   inner.addEventListener('mouseleave', () => {
@@ -733,7 +700,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   buildDots();
 })();
 
-
 /* ══════════════════════════════════════════════════════
    13. LIVE ACTIVITY FEED (Hero)
 ══════════════════════════════════════════════════════ */
@@ -747,7 +713,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     const el = items[idx % items.length];
     if (el) {
       el.classList.add('pulse');
-      // Update time
       const timeEl = el.querySelector('.activity-time');
       if (timeEl) {
         timeEl.textContent = idx === 0 ? 'ahora' : `${(idx % 10 + 1) * 2}s`;
@@ -757,9 +722,8 @@ function animateCounter(el, target, duration = 1800, format = null) {
   }, 2200);
 })();
 
-
 /* ══════════════════════════════════════════════════════
-   14. SMOOTH ANCHOR SCROLL (override default)
+   14. SMOOTH ANCHOR SCROLL
 ══════════════════════════════════════════════════════ */
 (function initAnchorScroll() {
   $$('a[href^="#"]').forEach(link => {
@@ -774,22 +738,18 @@ function animateCounter(el, target, duration = 1800, format = null) {
   });
 })();
 
-
 /* ══════════════════════════════════════════════════════
    15. HERO CHART ANIMATED LINE REVEAL
 ══════════════════════════════════════════════════════ */
 (function initHeroChartReveal() {
-  // After page load, re-trigger hero chart draw with animation
   window.addEventListener('load', () => {
     const canvas = $('#hero-chart');
     if (!canvas) return;
-    // Already drawn by initHeroChart; just ensure it's sized
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 300);
   });
 })();
-
 
 /* ══════════════════════════════════════════════════════
    16. NAVBAR ACTIVE LINK ON SCROLL
@@ -815,7 +775,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
   sections.forEach(s => observer.observe(s));
 })();
 
-
 /* ══════════════════════════════════════════════════════
    17. FEATURE CARD TILT EFFECT
 ══════════════════════════════════════════════════════ */
@@ -834,7 +793,6 @@ function animateCounter(el, target, duration = 1800, format = null) {
     });
   });
 })();
-
 
 /* ══════════════════════════════════════════════════════
    18. DASHBOARD HERO NUMBERS LIVE UPDATE
@@ -858,41 +816,49 @@ function animateCounter(el, target, duration = 1800, format = null) {
 })();
 
 /* ══════════════════════════════════════════════════════
-   INIT COMPLETE
+   19. SUPABASE INTEGRATION (REGISTRO DE USUARIOS)
 ══════════════════════════════════════════════════════ */
+(function initSupabaseRegister() {
+  const registerForm = document.getElementById('nexus-register-form');
+  if (!registerForm) return;
+
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+
+    if (!_supabase) {
+      alert("Error: Supabase no está inicializado. Revisa tus credenciales.");
+      return;
+    }
+
+    // Captura limpia de los valores del formulario
+    const nombreInput = document.getElementById('nexus-auth-name').value.trim();
+    const emailInput = document.getElementById('nexus-auth-email').value.trim();
+    const passwordInput = document.getElementById('nexus-auth-password').value;
+
+    try {
+      // Insertar los datos en tu tabla 'usuarios'
+      const { error } = await _supabase
+        .from('usuarios')
+        .insert([
+          { 
+            name: nombreInput, 
+            email: emailInput, 
+            password: passwordInput 
+          }
+        ]);
+
+      if (error) {
+        alert('Error al registrar en la base de datos: ' + error.message);
+        console.error(error);
+      } else {
+        alert('¡Brutal! Usuario registrado con éxito en NexusFlow.');
+        registerForm.reset(); 
+      }
+    } catch (err) {
+      alert('Error inesperado en la conexión.');
+      console.error(err);
+    }
+  });
+})();
+
 console.log('%cNexusFlow — Diseñado por Jesús Roo (@jsusroo)', 'color:#5b8df6;font-size:13px;font-weight:bold;');
- // 3. Escuchar el evento de registro del formulario
-console.log('%cNexusFlow — Diseñado por Jesús Roo (@jsusroo)', 'color:#5b8df6;font-size:13px;font-weight:bold;');
-
-// 3. Escuchar el evento de registro del formulario en NexusFlow
-const registerForm = document.getElementById('nexus-register-form');
-
-if (registerForm) {
-    registerForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); 
-
-        // Capturar lo que el usuario escribió usando los IDs reales de tu HTML
-        const nombreInput = document.getElementById('nexus-auth-name').value;
-        const emailInput = document.getElementById('nexus-auth-email').value;
-        const passwordInput = document.getElementById('nexus-auth-password').value;
-
-        // Insertar los datos usando el cliente _supabase y columnas en inglés
-        const { data, error } = await _supabase
-            .from('usuarios')
-            .insert([
-                { 
-                    name: nombreInput, 
-                    email: emailInput, 
-                    password: passwordInput 
-                }
-            ]);
-
-        if (error) {
-            alert('Error al registrar: ' + error.message);
-            console.error(error);
-        } else {
-            alert('¡Brutal! Usuario registrado con éxito en NexusFlow.');
-            registerForm.reset(); 
-        }
-    });
-}
