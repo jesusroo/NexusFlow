@@ -3,7 +3,7 @@ const SUPABASE_URL = "https://rwancgtywwkhowkcvqpu.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_-g-s6xqJkEGZDrwpDj9GQg_0dnF7Pyw";
 
 // 2. Inicializa el cliente de Supabase
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);/* ═══════════════════════════════════════════════════════
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);/* ═══════════════════════════════════════════════════════
    NEXUSFLOW — script.js
    ES6+ Native JavaScript — No dependencies
    Author: Jesús Roo / @jsusroo
