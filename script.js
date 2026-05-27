@@ -862,25 +862,37 @@ function animateCounter(el, target, duration = 1800, format = null) {
 ══════════════════════════════════════════════════════ */
 console.log('%cNexusFlow — Diseñado por Jesús Roo (@jsusroo)', 'color:#5b8df6;font-size:13px;font-weight:bold;');
  // 3. Escuchar el evento de registro del formulario
-document.getElementById('tu-formulario-id').addEventListener('submit', async (e) => {
-    e.preventDefault(); 
+console.log('%cNexusFlow — Diseñado por Jesús Roo (@jsusroo)', 'color:#5b8df6;font-size:13px;font-weight:bold;');
 
-    // Capturar lo que el usuario escribió en la pantalla
-    const email = document.getElementById('tu-input-email').value;
-    const password = document.getElementById('tu-input-password').value;
-    const nombre = document.getElementById('tu-input-nombre').value;
+// 3. Escuchar el evento de registro del formulario en NexusFlow
+const registerForm = document.getElementById('nexus-register-form');
 
-    // Insertar los datos en la tabla de Supabase
-    const { data, error } = await supabase
-        .from('usuarios')
-        .insert([
-            { nombre: nombre, email: email, password: password }
-        ]);
+if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
 
-    if (error) {
-        alert('Error: ' + error.message);
-    } else {
-        alert('¡Usuario registrado con éxito en NexusFlow!');
-        document.getElementById('tu-formulario-id').reset(); 
-    }
-});
+        // Capturar lo que el usuario escribió usando los IDs reales de tu HTML
+        const nombreInput = document.getElementById('nexus-auth-name').value;
+        const emailInput = document.getElementById('nexus-auth-email').value;
+        const passwordInput = document.getElementById('nexus-auth-password').value;
+
+        // Insertar los datos usando el cliente _supabase y columnas en inglés
+        const { data, error } = await _supabase
+            .from('usuarios')
+            .insert([
+                { 
+                    name: nombreInput, 
+                    email: emailInput, 
+                    password: passwordInput 
+                }
+            ]);
+
+        if (error) {
+            alert('Error al registrar: ' + error.message);
+            console.error(error);
+        } else {
+            alert('¡Brutal! Usuario registrado con éxito en NexusFlow.');
+            registerForm.reset(); 
+        }
+    });
+}
