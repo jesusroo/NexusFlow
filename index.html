@@ -513,11 +513,22 @@
     <!-- ═══════════════════════════════════════════
          CTA FINAL
     ═══════════════════════════════════════════ -->
+ <!-- ═══════════════════════════════════════════
+         CTA FINAL WITH DATABASE FORM
+    ═══════════════════════════════════════════ -->
     <section class="cta-section">
       <div class="cta-inner reveal">
         <h2 class="cta-title">Empieza a automatizar<br /><span class="gradient-text">hoy mismo</span></h2>
-        <p class="cta-sub">14 días gratis · Sin tarjeta de crédito · Cancela cuando quieras</p>
-        <a href="#pricing" class="btn btn-primary btn-lg">Crear cuenta gratuita →</a>
+        <p class="cta-sub">Únete a la lista de acceso anticipado de NexusFlow</p>
+        
+        <!-- FORMULARIO REAL CONECTADO A BASE DE DATOS -->
+        <form id="nexus-register-form" style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+          <input type="text" id="nexus-auth-name" placeholder="Tu Nombre" required style="padding: 0.8rem 1.5rem; width: 100%; max-width: 320px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif;">
+          <input type="email" id="nexus-auth-email" placeholder="tu@email.com" required style="padding: 0.8rem 1.5rem; width: 100%; max-width: 320px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif;">
+          <input type="password" id="nexus-auth-password" placeholder="Contraseña Segura" required style="padding: 0.8rem 1.5rem; width: 100%; max-width: 320px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif;">
+          <button type="submit" class="btn btn-primary btn-lg" style="cursor: pointer; margin-top: 0.5rem;">Crear cuenta gratuita →</button>
+        </form>
+
       </div>
     </section>
 
